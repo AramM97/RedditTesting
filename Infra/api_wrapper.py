@@ -12,11 +12,11 @@ class APIWrapper:
         self.response = None
         self.my_request = requests
         load_dotenv()
-        self.client_id = os.getenv("CLIENT_ID")
-        self.client_secret = os.getenv("CLIENT_SECRET")
-        self.user_agent = os.getenv("USER-AGENT")
-        self.username = os.getenv("REDDITUSER")
-        self.password = os.getenv("PASSWORD")
+        self.client_id = os.getenv("REDDIT_CLIENT_ID")
+        self.client_secret = os.getenv("REDDIT_CLIENT_SECRET")
+        self.user_agent = os.getenv("REDDIT_USER-AGENT")
+        self.username = os.getenv("REDDIT_USER")
+        self.password = os.getenv("REDDIT_PASSWORD")
 
     def sign_in_to_reddit(self):
         reddit = praw.Reddit(

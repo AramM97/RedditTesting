@@ -19,7 +19,7 @@ class TestCollection(unittest.TestCase):
 
     def test_comment_on_post(self):
         post_url = 'https://www.reddit.com/r/QAutomation/comments/1biuyuz/test_collections_post_1/'
-        comment_text_api = "comment posting test ."
+        comment_text_api = "comment posting test."
         self.subReddit.post_comment(post_url, comment_text_api)
         self.driver.get(post_url)
         comment_element = self.driver.find_element(By.XPATH, "//div[@class='py-0 xs:mx-xs mx-2xs inline-block max-w-full']")
