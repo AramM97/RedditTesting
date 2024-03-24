@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Install dependencies') {
             steps {
-                pwd
+                bat 'pwd'
                 bat 'pip install -r requirements.txt'
             }
         }
