@@ -9,14 +9,14 @@ pipeline {
         }
         stage('Install dependencies') {
             steps {
-                sh 'pwd'
-                sh 'pip install -r requirements.txt'
+                pwd
+                bat 'pip install -r requirements.txt'
             }
         }
         stage('Run tests') {
             steps {
                 // Run your Selenium tests using python directly
-                sh 'python test_comment.py'
+                bat 'python test_comment.py'
             }
         }
     }
@@ -24,7 +24,7 @@ pipeline {
     post {
         always {
             // Clean up steps, such as stopping services or cleaning temporary files
-            sh 'rm -rf __pycache__' // Clean up Python cache files
+            bat 'rm -rf __pycache__' // Clean up Python cache files
         }
         success {
             // Actions to take if the pipeline is successful
