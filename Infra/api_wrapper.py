@@ -34,8 +34,7 @@ class APIWrapper:
             password=self.password
         )
 
-
-
+        print(reddit.user.me())
         return reddit
 
     def api_get_request(self, url):
