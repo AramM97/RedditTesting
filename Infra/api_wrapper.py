@@ -15,17 +15,19 @@ class APIWrapper:
         self.client_id = os.getenv("CLIENT_ID")
         self.client_secret = os.getenv("CLIENT_SECRET")
         self.user_agent = os.getenv("USER-AGENT")
-        self.username = os.getenv("USERNAME")
+        self.username = os.getenv("REDDITUSER")
         self.password = os.getenv("PASSWORD")
 
     def sign_in_to_reddit(self):
         reddit = praw.Reddit(
-            client_id= self.client_id,
-            client_secret= self.client_secret,
+            client_id=self.client_id,
+            client_secret=self.client_secret,
             user_agent=self.user_agent,
             username=self.username,
             password=self.password
         )
+
+
         return reddit
 
     def api_get_request(self, url):
