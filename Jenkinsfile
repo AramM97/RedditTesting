@@ -4,20 +4,18 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Checkout your code from your version control system
                 git 'https://github.com/AramM97/RedditTesting'
             }
         }
         stage('Install dependencies') {
             steps {
-                // Install dependencies using pip
                 sh 'pwd'
                 sh 'pip install -r requirements.txt'
             }
         }
         stage('Run tests') {
             steps {
-                // Run your Selenium tests
+                // Run your Selenium tests using python directly
                 sh 'python test_comment.py'
             }
         }
