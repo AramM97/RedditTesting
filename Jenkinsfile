@@ -11,6 +11,7 @@ pipeline {
         stage('Install dependencies') {
             steps {
                 // Install dependencies using pip
+                sh 'pwd'
                 sh 'pip install -r requirements.txt'
             }
         }
