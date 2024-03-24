@@ -21,10 +21,6 @@ pipeline {
     }
 
     post {
-        always {
-            bat 'rmdir /s /q __pycache__ 2>nul' // Clean up Python cache files for Windows machine
-
-        }
         success {
             echo 'Tests passed successfully!'
         }
