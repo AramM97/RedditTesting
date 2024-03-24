@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Run tests') {
             steps {
-                bat 'python test_comments.py'
+                bat 'python test_runner.py'
             }
         }
     }
