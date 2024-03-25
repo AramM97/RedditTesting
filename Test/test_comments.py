@@ -1,9 +1,5 @@
 import unittest
-
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 import concurrent.futures
-
 
 from Infra.api_wrapper import APIWrapper
 from Infra.browser_wrapper import BrowserWrapper

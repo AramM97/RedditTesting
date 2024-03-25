@@ -11,6 +11,7 @@ test_suite = test_loader.loadTestsFromTestCase(TestCollection)
 test_runner = unittest.TextTestRunner()
 test_result = test_runner.run(test_suite)
 
+
 # Check if the tests ran successfully
 if test_result.wasSuccessful():
     print("All tests passed successfully!")
