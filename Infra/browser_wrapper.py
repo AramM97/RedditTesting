@@ -38,8 +38,8 @@ class BrowserWrapper:
 
 
     def get_driver(self, cap, website_url=""):
-        #self.url_hub = self.get_hub_url()
-        #self.driver = webdriver.Remote(command_executor=self.url_hub, options=cap)
+        self.url_hub = self.get_hub_url()
+        self.driver = webdriver.Remote(command_executor=self.url_hub, options=cap)
         self.driver.get(website_url)
         return self.driver
 
