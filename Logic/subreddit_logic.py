@@ -29,6 +29,14 @@ class SubReddit():
         print(f'Post created successfully! Here is the link: {submission.url}')
         return submission.url
 
+    def post_and_comment_workflow(self):
+        post_title = self.utils.generate_post_title(max_length=50)
+        post_desc = self.utils.generate_random_comment()
+        post_url = self.create_post(self.subreddit_name, post_title=self.post_title, post_body=self.post_desc)
+        comment = self.utils.generate_random_comment()
+        self.post_comment(post_url=self.post_url, comment=self.comment)
+        return post_url, post_title ,post_desc,comment
+
     def subscribe_to_subreddit(self, subreddit_name):
         self.reddit.subreddit(subreddit_name).subscribe()
 
@@ -65,3 +73,17 @@ class SubReddit():
         active_user_count = subreddit.active_user_count
         print("Active user count:", active_user_count)
 
+    def get_top_subreddits_according_to_location(self):
+        # Retrieve popular subreddits
+        subreddits = self.reddit.subreddits.popular(limit=100)
+
+        # Filter subreddits by location (example: United States)
+        filtered_subreddits = [subreddit for subreddit in subreddits if 'usa' in subreddit.display_name.lower()]
+
+        # Rank subreddits based on subscriber count
+        top_subreddits = sorted(filtered_subreddits, key=lambda x: x.subscribers, reverse=True)[:10]
+
+        # Display top subreddits
+        for subreddit in top_subreddits:
+            print(subreddit.display_name, subreddit.subscribers)
+        return top_subreddits

@@ -1,4 +1,6 @@
 import json
+import random
+from faker import Faker
 
 from dotenv import load_dotenv
 import os
@@ -35,6 +37,44 @@ class Utils:
         subreddit_name = config_data.get("subredditName")
         return subreddit_name
 
+    def generate_random_comment(self):
+        # Initialize Faker for English and Hebrew
+        faker_en = Faker(['en_US'])
+        faker_he = Faker(['he_IL'])
+
+        # Choose randomly between English and Hebrew
+        language_choice = random.choice(['English', 'Hebrew'])
+
+        # Generate random passage based on chosen language
+        if language_choice == 'English':
+            english_passage = faker_en.paragraph()
+            print("English Passage:")
+            print(english_passage)
+            return english_passage
+        else:
+            hebrew_passage = faker_he.paragraph()
+            print("Hebrew Passage:")
+            print(hebrew_passage)
+            return hebrew_passage
+
+    def generate_post_title(self, max_length, language='both'):
+        # Initialize Faker for English and Hebrew
+        faker_en = Faker(['en_US'])
+        faker_he = Faker(['he_IL'])
+
+        # Choose randomly between English and Hebrew if 'both' is selected
+        if language == 'both':
+            language = random.choice(['English', 'Hebrew'])
+
+        # Generate random title based on chosen language
+        if language == 'English':
+            post_title = faker_en.text(max_nb_chars=max_length)
+        else:
+            post_title = faker_he.text(max_nb_chars=max_length)
+
+        return post_title
+
+
 # Example usage:
 if __name__ == "__main__":
     utils = Utils()
@@ -56,3 +96,8 @@ if __name__ == "__main__":
 
     print("Subreddit URL:", subreddit_url)
     print("Subreddit Name:", subreddit_name)
+
+    max_title_length = 350  # Adjust the max length as per your requirement
+    post_title = utils.generate_post_title(max_title_length)
+    print("Post Title:")
+    print(post_title)

@@ -32,6 +32,7 @@ class TestCollection(unittest.TestCase):
         self.driver = self.browser.get_driver(cap, website_url=post_url)
         self.post_page = PostPage(self.driver)
 
+        # test multiple languages such as arabic english hebrew
         comment_text_api = "comment posting test"
         self.subReddit.post_comment(post_url, comment_text_api)
 
