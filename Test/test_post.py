@@ -1,5 +1,5 @@
 # test reddit post title limit of 300 check negative test of title post of over 300
-
+import time
 import unittest
 import concurrent.futures
 
@@ -33,6 +33,7 @@ class TestPost(unittest.TestCase):
         self.sub_url = self.utils.get_subreddit_url()
         self.sub_name = self.utils.get_subreddit_name()
         self.driver = self.browser.get_driver(website_url=self.sub_url)
+        self.driver.maximize_window()
 
     def test_post_on_subreddit(self, limit=50):
 
@@ -44,6 +45,7 @@ class TestPost(unittest.TestCase):
         post_desc = self.utils.generate_random_comment()
 
         post_url = self.subReddit.create_post(self.sub_name, post_title, post_desc)
+
 
         self.browser.set_url_for_driver(post_url)
         self.post_page = PostPage(self.driver)
@@ -58,6 +60,12 @@ class TestPost(unittest.TestCase):
 
     def test_post_comment_workflow(self):
         post_url, post_title, post_desc, comment = self.subReddit.post_and_comment_workflow()
+
+        print(post_url)
+        print(post_title)
+        print(post_desc)
+        print(comment)
+
 
         self.driver = self.browser.get_driver(website_url=post_url)
         self.post_page = PostPage(self.driver)

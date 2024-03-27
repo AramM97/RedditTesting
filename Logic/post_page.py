@@ -1,3 +1,5 @@
+import time
+
 from selenium.common import StaleElementReferenceException
 from selenium.common import ElementNotVisibleException
 from selenium.webdriver import ActionChains
@@ -8,18 +10,14 @@ from selenium.webdriver.common.keys import Keys
 
 
 class PostPage:
-    FIRST_COMMENT = "//div[@class='py-0 xs:mx-xs mx-2xs inline-block max-w-full']"
-    POST_TITLE = '//h1[@id="post-title-t3_bjxyof"]'
-    POST_DESC = '//div[@id="t3_bjxyof-post-rtjson-content"]'
+    POST_TITLE = '//h1[@class="font-semibold text-neutral-content-strong m-0 text-18 xs:text-24  mb-xs px-md xs:px-0 xs:mb-md "]'
+    POST_DESC = '//div[@class="text-neutral-content"]/div/div'
 
     def __init__(self, driver):
         self.driver = driver
-        self.comment_element = self.driver.find_element(By.XPATH, self.FIRST_COMMENT)
         self.post_title_element = self.driver.find_element(By.XPATH, self.POST_TITLE)
         self.post_desc_element = self.driver.find_element(By.XPATH, self.POST_DESC)
 
-    def get_comment_text(self):
-        return self.comment_element.text
 
     def get_post_title(self):
         return self.post_title_element.text
