@@ -12,7 +12,7 @@ from Logic.post_page import PostPage
 from Logic.subreddit_page import SubredditPage
 
 
-class TestCollection(unittest.TestCase):
+class TestPost(unittest.TestCase):
 
     def setUp(self) -> None:
         self.api_wrapper = APIWrapper()
@@ -20,23 +20,13 @@ class TestCollection(unittest.TestCase):
         self.subReddit = SubReddit(self.reddit)
         self.browser = BrowserWrapper()
         self.cap_list = self.browser.get_cap_list()
-        self.utils = Utils
+        self.utils = Utils()
+        self.sub_url = self.utils.get_subreddit_url()
+        self.sub_name = self.utils.get_subreddit_name()
+        self.driver = self.browser.get_driver(website_url=self.sub_url)
 
+    def test_post_on_subreddit(self, limit=50):
 
-    def test_run_grid_serial(self):
-        for cap in self.cap_list:
-            self.test_post_comment_workflow(cap)
-
-    def test_run_grid_parallel(self):
-        with concurrent.futures.ThreadPoolExecutor(max_workers=len(self.cap_list)) as executer:
-            executer.map(self.test_post_comment_workflow, self.cap_list)
-
-
-    def test_post_on_subreddit(self, cap, limit = 50):
-        sub_url = self.utils.get_subreddit_url()
-        sub_name = self.utils.get_subreddit_name()
-        self.driver = self.browser.get_driver(cap, website_url=sub_url)
-        self.post_page = PostPage(self.driver)
 
         # test the limit
         post_title = self.utils.generate_post_title(limit)
@@ -44,7 +34,11 @@ class TestCollection(unittest.TestCase):
         # test multiple languages such as english and hebrew
         post_desc = self.utils.generate_random_comment()
 
-        self.subReddit.create_post(sub_name, post_title, post_desc)
+        post_url = self.subReddit.create_post(self.sub_name, post_title, post_desc)
+
+        self.browser.set_url_for_driver(post_url)
+        self.post_page = PostPage(self.driver)
+
 
         # get the post title and desc
         self.title_text = self.post_page.get_post_title()
@@ -52,13 +46,11 @@ class TestCollection(unittest.TestCase):
 
         self.assertIn(post_title, self.title_text, "title is not working")
         self.assertIn(post_desc, self.desc_text, "desc is not working")
-        self.driver.quit()
-        return
 
-    def test_post_comment_workflow(self, cap):
+    def test_post_comment_workflow(self):
         post_url, post_title, post_desc, comment = self.subReddit.post_and_comment_workflow()
 
-        self.driver = self.browser.get_driver(cap, website_url=post_url)
+        self.driver = self.browser.get_driver(website_url=post_url)
         self.post_page = PostPage(self.driver)
 
         # get the post title and desc
@@ -68,7 +60,6 @@ class TestCollection(unittest.TestCase):
         self.assertIn(post_title, self.title_text, "title is not working")
         self.assertIn(post_desc, self.desc_text, "desc is not working")
 
-        self.driver.quit()
-
     def tearDown(self) -> None:
+        self.driver.quit()
         return

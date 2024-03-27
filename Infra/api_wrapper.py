@@ -19,13 +19,6 @@ class APIWrapper:
         self.password = os.getenv("REDDIT_PASSWORD")
 
     def sign_in_to_reddit(self):
-
-        # Print environment arguments
-        print("Client ID:", self.client_id)
-        print("Client Secret:", self.client_secret)
-        print("Username:", self.username)
-        print("Password:", self.password)
-
         reddit = praw.Reddit(
             client_id=self.client_id,
             client_secret=self.client_secret,

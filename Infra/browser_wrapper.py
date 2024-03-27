@@ -10,6 +10,7 @@ class BrowserWrapper:
 
     def __init__(self):
         self.driver = None
+        self.json = self.get_json_file()
         print('test has started')
 
     def get_json_file(self):
@@ -29,19 +30,31 @@ class BrowserWrapper:
 
 
     def get_hub_url(self):
-        self.json = self.get_json_file()
         return self.json["hub"]
 
-    def get_search_query_url(self):
-        self.json = self.get_json_file()
-        return self.json["search_query"]
+    def get_is_parallel(self):
+        return self.json["parallel"]
 
 
-    def get_driver(self, cap, website_url=""):
-        self.url_hub = self.get_hub_url()
-        self.driver = webdriver.Remote(command_executor=self.url_hub, options=cap)
+    def get_driver(self, browser="chrome",website_url=""):
+        grid = self.json["grid"]
+        url_hub = self.get_hub_url()
+
+        if grid:
+            options = self.get_cap_list()
+            self.driver = webdriver.Remote(command_executor=url_hub, options=options)
+
+        else:
+            if browser == 'chrome':
+                self.driver = webdriver.Chrome()
+            elif browser == 'firefox':
+                self.driver = webdriver.Firefox()
+
         self.driver.get(website_url)
         return self.driver
+
+    def set_url_for_driver(self, website_url):
+        self.driver.get(website_url)
 
     def get_cap_list(self):
         self.json_config = self.get_json_file()
@@ -64,6 +77,27 @@ class BrowserWrapper:
         cap_list = [self.options_chrome, self.options_firefox]
         print(cap_list)
         return cap_list
+
+    def get_browser_names(self):
+        try:
+            # Load JSON data
+            data = self.get_json_file()
+
+            # Initialize a list to store browser names
+            browser_names = []
+
+            # Iterate through each capability dictionary
+            for capability in data.get("capabilities", []):
+                # Extract browserName from each capability and append to the list
+                browser_name = capability.get("browserName")
+                if browser_name:
+                    browser_names.append(browser_name)
+
+            return browser_names
+
+        except json.JSONDecodeError:
+            print("Invalid JSON format")
+            return []
 
     def get_teardown(self):
         self.driver.quit()

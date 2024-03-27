@@ -8,6 +8,7 @@ import os
 class Utils:
     def __init__(self):
         load_dotenv()
+        self.config_data = self.get_config_file()
 
     def get_client_id(self):
         return os.getenv("CLIENT_ID")
@@ -25,16 +26,16 @@ class Utils:
         return os.getenv("USER-AGENT")
 
     def get_config_file(self):
-        with open("config.json", "r") as config_file:
+        with open("Infra/config.json", "r") as config_file:
             config_data = json.load(config_file)
         return config_data
 
-    def get_subreddit_url(self, config_data):
-        subreddit_url = config_data.get("subredditURl")
+    def get_subreddit_url(self):
+        subreddit_url = self.config_data.get("subredditURl")
         return subreddit_url
 
-    def get_subreddit_name(self, config_data):
-        subreddit_name = config_data.get("subredditName")
+    def get_subreddit_name(self):
+        subreddit_name = self.config_data.get("subredditName")
         return subreddit_name
 
     def generate_random_comment(self):

@@ -7,7 +7,7 @@ from Infra.browser_wrapper import BrowserWrapper
 from Logic.subreddit_logic import SubReddit
 from Logic.post_page import PostPage
 
-class TestCollection(unittest.TestCase):
+class TestComments(unittest.TestCase):
 
     def setUp(self) -> None:
         self.api_wrapper = APIWrapper()

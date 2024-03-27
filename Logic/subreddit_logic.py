@@ -1,3 +1,5 @@
+import time
+
 import praw
 
 from Infra.utils import Utils
@@ -10,7 +12,7 @@ class SubReddit():
         self.reddit = reddit
         self.utils = Utils()
         self.config = self.utils.get_config_file()
-        self.subreddit_name = self.utils.get_subreddit_name(self.config)
+        self.subreddit_name = self.utils.get_subreddit_name()
 
     def post_comment(self, post_url, comment):
         post_url = post_url
@@ -32,10 +34,11 @@ class SubReddit():
     def post_and_comment_workflow(self):
         post_title = self.utils.generate_post_title(max_length=50)
         post_desc = self.utils.generate_random_comment()
-        post_url = self.create_post(self.subreddit_name, post_title=self.post_title, post_body=self.post_desc)
+        post_url = self.create_post(self.subreddit_name, post_title=post_title, post_body=post_desc)
+        time.sleep(5)
         comment = self.utils.generate_random_comment()
-        self.post_comment(post_url=self.post_url, comment=self.comment)
-        return post_url, post_title ,post_desc,comment
+        self.post_comment(post_url=post_url, comment=comment)
+        return post_url, post_title, post_desc, comment
 
     def subscribe_to_subreddit(self, subreddit_name):
         self.reddit.subreddit(subreddit_name).subscribe()
