@@ -3,6 +3,13 @@
 import unittest
 import concurrent.futures
 
+import sys
+import os
+
+# Add the project directory to the Python path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.insert(0, project_root)
+
 from Infra.api_wrapper import APIWrapper
 from Infra.browser_wrapper import BrowserWrapper
 from Infra.utils import Utils
@@ -64,12 +71,13 @@ class TestPost(unittest.TestCase):
 
     def tearDown(self) -> None:
         self.driver.quit()
-        if hasattr(self, 'assertion_passed') and self.assertion_passed:
+        # Check if the last test method succeeded
+        if not self._outcome.success:
             try:
                 # Assertion passed, report bug to Jira
                 jira_report = JiraReport()
                 issue_summary = "Test Assertion Failure"
-                issue_description = "Test failed due to assertion failure in test_create_board"
+                issue_description = "Test failed due to assertion failure in test_post"
                 jira_report.create_issue(issue_summary, issue_description)
                 print("Issue Created")
             except Exception as e:

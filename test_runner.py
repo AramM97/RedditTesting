@@ -3,8 +3,8 @@ from concurrent.futures import ThreadPoolExecutor
 from typing import Type
 
 # Import the test class containing test cases
-from Test.test_comments import TestComments
 from Test.test_post import TestPost
+from Test.test_subreddit import TestSubreddit
 
 from Infra.browser_wrapper import BrowserWrapper
 
@@ -12,6 +12,8 @@ from Infra.browser_wrapper import BrowserWrapper
 serial_cases = [TestPost]
 parallel_cases = [TestPost]
 demo_cases = [TestPost]
+
+test_temp = [TestSubreddit]
 
 # tests call
 def run_tests_for_browser(browser: str, test_case: Type[unittest.TestCase]):
@@ -43,8 +45,8 @@ if __name__ == "__main__":
     browsers = browser.get_browser_names()
     grid_url = browser.get_hub_url()
     if is_parallel:
-        run_tests_for_browser_parallel(cap_list, parallel_cases)
+        run_tests_for_browser_parallel(cap_list, test_temp)
     elif is_serial:
-        run_tests_for_browser_serial(cap_list, serial_cases)
+        run_tests_for_browser_serial(cap_list, test_temp)
     else:
-        run_tests_for_browser_serial(cap_list, demo_cases)
+        run_tests_for_browser_serial(cap_list, test_temp)

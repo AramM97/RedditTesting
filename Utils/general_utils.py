@@ -9,6 +9,7 @@ class GeneralUtils:
         self.jira_token = os.getenv("JIRATOKEN")
         self.jira_domain = os.getenv("JIRADOMAIN")
         self.jira_email = os.getenv("EMAIL")
+        self.jira_key = os.getenv("KEY")
 
     def get_jira_token(self):
         # Get the Jira token.
@@ -24,4 +25,4 @@ class GeneralUtils:
 
     def get_jira_key(self):
         # Get the Jira email.
-        return self.jira_email
+        return self.jira_key

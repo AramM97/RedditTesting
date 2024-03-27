@@ -70,6 +70,7 @@ class SubReddit():
         subreddit = self.reddit.subreddit(subreddit)
         subscriber_count = subreddit.subscribers
         print("Subreddit subscriber count:", subscriber_count)
+        return subscriber_count
 
     def active_user_count(self, subreddit):
         subreddit = self.reddit.subreddit(subreddit)
@@ -78,10 +79,13 @@ class SubReddit():
 
     def get_top_subreddits_according_to_location(self):
         # Retrieve popular subreddits
+        print("in func get_top_subreddits_according_to_location")
         subreddits = self.reddit.subreddits.popular(limit=100)
+        print(subreddits)
 
         # Filter subreddits by location (example: United States)
         filtered_subreddits = [subreddit for subreddit in subreddits if 'usa' in subreddit.display_name.lower()]
+        print(filtered_subreddits)
 
         # Rank subreddits based on subscriber count
         top_subreddits = sorted(filtered_subreddits, key=lambda x: x.subscribers, reverse=True)[:10]
