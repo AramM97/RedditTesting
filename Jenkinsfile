@@ -4,12 +4,14 @@ pipeline {
     stages {
         stage('Start Selenium Hub') {
             steps {
-                bat 'java -jar selenium-server-4.17.0.jar hub'
+                // Run Selenium Hub command in the background
+                bat 'start /B java -jar selenium-server-4.17.0.jar hub'
             }
         }
         stage('Start Selenium Node') {
             steps {
-                bat 'java -jar selenium-server-4.17.0.jar node --port 5555 --selenium-manager true'
+                // Run Selenium Node command in the background
+                bat 'start /B java -jar selenium-server-4.17.0.jar node --port 5555 --selenium-manager true'
             }
         }
         stage('Checkout') {
