@@ -2,6 +2,16 @@ pipeline {
     agent any
 
     stages {
+        stage('Start Selenium Hub') {
+            steps {
+                bat 'java -jar selenium-server-4.17.0.jar hub'
+            }
+        }
+        stage('Start Selenium Node') {
+            steps {
+                bat 'java -jar selenium-server-4.17.0.jar node --port 5555 --selenium-manager true'
+            }
+        }
         stage('Checkout') {
             steps {
                 git 'https://github.com/AramM97/RedditTesting'
@@ -30,7 +40,7 @@ pipeline {
         }
         stage('Run tests') {
             steps {
-                bat 'python test_runner.py'
+                bat 'pytest test_runner.py --html=report.html'
             }
         }
     }
