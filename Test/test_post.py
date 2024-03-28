@@ -37,7 +37,7 @@ class TestPost(unittest.TestCase):
 
     def test_post_on_subreddit(self, limit=50):
 
-        limit = 350
+        #limit = 350
         # test the limit
         post_title = self.utils.generate_post_title(limit)
 

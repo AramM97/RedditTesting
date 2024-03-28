@@ -40,7 +40,7 @@ class TestSubreddit(unittest.TestCase):
 
     def tearDown(self) -> None:
         # Check if the last test method succeeded
-        if not self._outcome.success:
+        if self._outcome.success:
             try:
                 # Assertion passed, report bug to Jira
                 jira_report = JiraReport()
